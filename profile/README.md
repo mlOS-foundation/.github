@@ -23,4 +23,4 @@ Just as POSIX made software portable across Unix systems, MLOS makes ML models p
 
 ---
 
-*© 2024 mlOS Foundation. Building the future of ML infrastructure.*
+*© 2025 mlOS Foundation. Building the future of ML infrastructure.*
