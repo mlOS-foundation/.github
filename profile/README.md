@@ -13,8 +13,8 @@ MLOS introduces a paradigm shift: ML frameworks don't integrate with deployment 
 ## 📋 Status
 
 - 🔒 **Patent(s) Pending**:
- - USPTO #63/861,527
- - USPTO #63/865,176
+  - USPTO #63/861,527
+  - USPTO #63/865,176
 - 🚧 **Phase**: Private MVP Development
 - 📅 **Public Release**: Q2 2026
 - 📧 **Contact**: info@mlos-foundation.org
