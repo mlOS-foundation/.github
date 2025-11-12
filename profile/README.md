@@ -216,8 +216,8 @@ MLOS introduces a paradigm shift: **ML frameworks don't integrate with deploymen
 
 ### Phase 3: Production Readiness (Planned 📅)
 
-**Status**: Planned  
-**Timeline**: Q2 2026  
+**Status**: Planning  
+**Timeline**: Q2-Q3 2026  
 **Target**: Public Release
 
 **Planned Deliverables:**
@@ -227,12 +227,14 @@ MLOS introduces a paradigm shift: **ML frameworks don't integrate with deploymen
 - 📅 Automatic scaling
 - 📅 ML model versioning
 - 📅 Package manager support (Homebrew, APT, etc.)
+- 📅 **MLOS Linux Distributions** (Ubuntu & Flatcar-based)
 
 **Key Features:**
 - Production-grade stability
 - Enterprise features
 - Comprehensive documentation
 - Community ecosystem
+- **Complete Linux distributions** with MLOS pre-installed
 
 ### Phase 4: Ecosystem Expansion (Future 🔮)
 
@@ -255,7 +257,9 @@ MLOS introduces a paradigm shift: **ML frameworks don't integrate with deploymen
 | **Axon** | v1.5.0 | ✅ Stable | [axon](https://github.com/mlOS-foundation/axon) |
 | **MLOS Core** | v1.0.0 | ✅ Stable (Private) | Private |
 | **SMI Spec** | v1.0.0 | 🔒 Private (In Development) | Private |
-| **MLOS Distro** | - | 🔄 Planned | Future |
+| **MLOS Linux (Ubuntu)** | - | 🔄 Planning | [mlos-linux-ubuntu](https://github.com/mlOS-foundation/mlos-linux-ubuntu) |
+| **MLOS Linux (Flatcar)** | - | 🔄 Planning | [mlos-linux-flatcar](https://github.com/mlOS-foundation/mlos-linux-flatcar) |
+| **MLOS Kernel Patches** | - | 🔄 Planning | [mlos-linux-kernel](https://github.com/mlOS-foundation/mlos-linux-kernel) |
 
 ### Patent Status
 
@@ -299,6 +303,12 @@ curl -X POST http://localhost:8080/models/hf/bert-base-uncased@latest/inference 
 
 - **[axon](https://github.com/mlOS-foundation/axon)** - Universal model installer (v1.5.0+)
 - **[mlosfoundation.org](https://github.com/mlOS-foundation/mlosfoundation.org)** - Official website
+
+### Distribution Projects (Planning 🔄)
+
+- **[mlos-linux-ubuntu](https://github.com/mlOS-foundation/mlos-linux-ubuntu)** - Ubuntu-based MLOS Linux distribution (v1.0.0 target)
+- **[mlos-linux-flatcar](https://github.com/mlOS-foundation/mlos-linux-flatcar)** - Flatcar-based MLOS Linux distribution (v1.0.0 target)
+- **[mlos-linux-kernel](https://github.com/mlOS-foundation/mlos-linux-kernel)** - Shared kernel patches for MLOS distributions
 
 ### Private Projects
 
