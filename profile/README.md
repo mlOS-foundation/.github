@@ -75,7 +75,8 @@ MLOS introduces a paradigm shift: **ML frameworks don't integrate with deploymen
 #### 📐 **SMI Spec** - Standard Model Interface
 - **Universal Contract**: Framework-agnostic interface for ML models
 - **Multi-Language Support**: C, Python, Go, JavaScript, and more
-- **Repository**: [mlOS-foundation/smi-spec](https://github.com/mlOS-foundation/smi-spec)
+- **Status**: 🔒 Private - In Development
+- **Repository**: Private (will be open-sourced in Phase 3)
 
 ## 🏗️ Architecture Overview
 
@@ -253,7 +254,7 @@ MLOS introduces a paradigm shift: **ML frameworks don't integrate with deploymen
 |-----------|---------|--------|------------|
 | **Axon** | v1.5.0 | ✅ Stable | [axon](https://github.com/mlOS-foundation/axon) |
 | **MLOS Core** | v1.0.0 | ✅ Stable (Private) | Private |
-| **SMI Spec** | v1.0.0 | ✅ Stable | [smi-spec](https://github.com/mlOS-foundation/smi-spec) |
+| **SMI Spec** | v1.0.0 | 🔒 Private (In Development) | Private |
 | **MLOS Distro** | - | 🔄 Planned | Future |
 
 ### Patent Status
@@ -297,8 +298,12 @@ curl -X POST http://localhost:8080/models/hf/bert-base-uncased@latest/inference 
 ### Core Projects
 
 - **[axon](https://github.com/mlOS-foundation/axon)** - Universal model installer (v1.5.0+)
-- **[smi-spec](https://github.com/mlOS-foundation/smi-spec)** - Standard Model Interface specification
 - **[mlosfoundation.org](https://github.com/mlOS-foundation/mlosfoundation.org)** - Official website
+
+### Private Projects
+
+- **SMI Spec** - Standard Model Interface specification (🔒 Private, in development)
+- **MLOS Core** - Kernel-level ML runtime (🔒 Private)
 
 ### Supporting Projects
 
