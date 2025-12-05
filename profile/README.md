@@ -3,8 +3,8 @@
 **Building the Universal Operating System for Machine Learning**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Axon](https://img.shields.io/badge/Axon-v3.1.1-brightgreen)](https://github.com/mlOS-foundation/axon/releases)
-[![Core](https://img.shields.io/badge/Core-v3.2.5--alpha-blue)](https://github.com/mlOS-foundation/core-releases)
+[![Axon](https://img.shields.io/badge/Axon-v3.1.3-brightgreen)](https://github.com/mlOS-foundation/axon/releases)
+[![Core](https://img.shields.io/badge/Core-v3.2.8--alpha-blue)](https://github.com/mlOS-foundation/core-releases)
 [![E2E Tests](https://github.com/mlOS-foundation/system-test/actions/workflows/e2e-test.yml/badge.svg)](https://mlos-foundation.github.io/system-test/)
 
 ## 🎯 Mission
@@ -22,7 +22,7 @@ MLOS introduces a paradigm shift: **ML frameworks don't integrate with deploymen
 │                    Application Layer                            │
 │  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐          │
 │  │   Axon CLI   │  │  MLOS API    │  │   Plugins    │          │
-│  │  (v3.1.1)    │  │(HTTP/gRPC/IPC)│ │ (SMI-based)  │          │
+│  │  (v3.1.3)    │  │(HTTP/gRPC/IPC)│ │ (SMI-based)  │          │
 │  └──────┬───────┘  └──────┬───────┘  └──────┬───────┘          │
 └─────────┼──────────────────┼─────────────────┼──────────────────┘
           │                  │                 │
@@ -30,7 +30,7 @@ MLOS introduces a paradigm shift: **ML frameworks don't integrate with deploymen
           │    Convert       │    with MLOS    │    Inference
           │                  │                 │
 ┌─────────▼──────────────────▼─────────────────▼──────────────────┐
-│                    MLOS Core Engine (v3.2.5-alpha)              │
+│                    MLOS Core Engine (v3.2.8-alpha)              │
 │  ┌──────────────────────────────────────────────────────────┐  │
 │  │  Model Registry  │  Plugin Registry  │  Resource Mgr     │  │
 │  └──────────────────────────────────────────────────────────┘  │
@@ -106,7 +106,7 @@ The built-in ONNX Runtime plugin now supports **universal inference**:
 
 ### 🧠 Axon - The Neural Pathway for ML Models
 
-**Version: v3.1.1** | [Repository](https://github.com/mlOS-foundation/axon) | [Releases](https://github.com/mlOS-foundation/axon/releases)
+**Version: v3.1.3** | [Repository](https://github.com/mlOS-foundation/axon) | [Releases](https://github.com/mlOS-foundation/axon/releases)
 
 - **Universal Model Installer**: Works with 80%+ of ML repositories
 - **Universal ONNX Conversion**: Docker-based multi-framework converter
@@ -120,7 +120,7 @@ curl -sSL axon.mlosfoundation.org | sh
 
 ### ⚙️ MLOS Core - Kernel-Level ML Runtime
 
-**Version: v3.2.5-alpha** | [Releases](https://github.com/mlOS-foundation/core-releases)
+**Version: v3.2.8-alpha** | [Releases](https://github.com/mlOS-foundation/core-releases)
 
 - **Multi-Protocol APIs**: HTTP REST, gRPC, IPC (ultra-low latency)
 - **Enhanced ONNX Plugin**: Multi-type tensor support, named inputs
@@ -178,8 +178,8 @@ curl -X POST http://localhost:8080/models/hf%2Fgoogle%2Fvit-base-patch16-224%40l
 
 | Component | Version | Status | Repository |
 |-----------|---------|--------|------------|
-| **Axon** | v3.1.1 | ✅ Stable | [axon](https://github.com/mlOS-foundation/axon) |
-| **MLOS Core** | v3.2.5-alpha | ✅ Alpha | [core-releases](https://github.com/mlOS-foundation/core-releases) |
+| **Axon** | v3.1.3 | ✅ Stable | [axon](https://github.com/mlOS-foundation/axon) |
+| **MLOS Core** | v3.2.8-alpha | ✅ Alpha | [core-releases](https://github.com/mlOS-foundation/core-releases) |
 | **System Test** | Active | ✅ CI/CD | [system-test](https://github.com/mlOS-foundation/system-test) |
 | **SMI Spec** | v1.0.0 | 🔒 Private | [smi-spec](https://github.com/mlOS-foundation/smi-spec) |
 | **MLOS Linux (Ubuntu)** | - | 🔄 Planning | [mlos-linux-ubuntu](https://github.com/mlOS-foundation/mlos-linux-ubuntu) |
@@ -203,7 +203,8 @@ curl -X POST http://localhost:8080/models/hf%2Fgoogle%2Fvit-base-patch16-224%40l
 - **Axon v3.0.0**: Universal ONNX conversion
 - **Core v2.2.0-alpha**: Multi-type tensor support, named inputs
 - **Axon v3.1.0**: Vision model support
-- **Core v3.2.5-alpha**: Large input handling, shape inference
+- **Axon v3.1.3**: Enhanced seq2seq/multi-encoder model support, improved T5 conversion
+- **Core v3.2.8-alpha**: Complete seq2seq inference with auto attention_mask generation
 - E2E validation with automated testing
 
 ### 🚧 Phase 3: Production Readiness (In Progress)
