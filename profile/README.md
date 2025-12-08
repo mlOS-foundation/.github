@@ -3,8 +3,8 @@
 **Building the Universal Operating System for Machine Learning**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Axon](https://img.shields.io/badge/Axon-v3.1.3-brightgreen)](https://github.com/mlOS-foundation/axon/releases)
-[![Core](https://img.shields.io/badge/Core-v3.2.8--alpha-blue)](https://github.com/mlOS-foundation/core-releases)
+[![Axon](https://img.shields.io/badge/Axon-v3.1.4-brightgreen)](https://github.com/mlOS-foundation/axon/releases)
+[![Core](https://img.shields.io/badge/Core-v3.2.10--alpha-blue)](https://github.com/mlOS-foundation/core-releases)
 [![E2E Tests](https://github.com/mlOS-foundation/system-test/actions/workflows/e2e-test.yml/badge.svg)](https://mlos-foundation.github.io/system-test/)
 
 ## 🎯 Mission
@@ -22,7 +22,7 @@ MLOS introduces a paradigm shift: **ML frameworks don't integrate with deploymen
 │                    Application Layer                            │
 │  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐          │
 │  │   Axon CLI   │  │  MLOS API    │  │   Plugins    │          │
-│  │  (v3.1.3)    │  │(HTTP/gRPC/IPC)│ │ (SMI-based)  │          │
+│  │  (v3.1.4)    │  │(HTTP/gRPC/IPC)│ │ (SMI-based)  │          │
 │  └──────┬───────┘  └──────┬───────┘  └──────┬───────┘          │
 └─────────┼──────────────────┼─────────────────┼──────────────────┘
           │                  │                 │
@@ -30,7 +30,7 @@ MLOS introduces a paradigm shift: **ML frameworks don't integrate with deploymen
           │    Convert       │    with MLOS    │    Inference
           │                  │                 │
 ┌─────────▼──────────────────▼─────────────────▼──────────────────┐
-│                    MLOS Core Engine (v3.2.8-alpha)              │
+│                    MLOS Core Engine (v3.2.10-alpha)             │
 │  ┌──────────────────────────────────────────────────────────┐  │
 │  │  Model Registry  │  Plugin Registry  │  Resource Mgr     │  │
 │  └──────────────────────────────────────────────────────────┘  │
@@ -38,7 +38,7 @@ MLOS introduces a paradigm shift: **ML frameworks don't integrate with deploymen
 │  │         Standard Model Interface (SMI)                    │  │
 │  └──────────────────────────────────────────────────────────┘  │
 │  ┌──────────────────────────────────────────────────────────┐  │
-│  │    ONNX Runtime Plugin (Multi-Type Tensor Support)       │  │
+│  │  ONNX Runtime Plugin  │  GGUF/llama.cpp Plugin (LLMs)    │  │
 │  └──────────────────────────────────────────────────────────┘  │
 └─────────────────────────────────────────────────────────────────┘
           │
@@ -89,27 +89,75 @@ The built-in ONNX Runtime plugin now supports **universal inference**:
 - ✅ Dynamic shape handling
 - ✅ Large input support (16MB+)
 
+### ⚡ NEW: Format-Agnostic Runtime (v3.2.10-alpha)
+
+MLOS now features **native format execution** - models run in their optimal format without conversion overhead:
+
+| Format | Extension | Runtime | Use Case | Performance |
+|--------|-----------|---------|----------|-------------|
+| **GGUF** | `.gguf` | llama.cpp | LLMs (TinyLlama, Phi-2, Qwen) | **Native** - No conversion |
+| **ONNX** | `.onnx` | ONNX Runtime | Vision, NLP encoders | **Native** - Built-in |
+| **SafeTensors** | `.safetensors` | Auto-convert | HuggingFace models | Converted to ONNX |
+| **PyTorch** | `.pt`, `.pth` | Auto-convert | Research models | Converted to ONNX |
+
+**Why Format-Agnostic Matters:**
+
+```
+Traditional Approach (Always Convert to ONNX):
+┌──────────┐    ┌──────────────┐    ┌──────────────┐
+│ GGUF LLM │ -> │ Convert ONNX │ -> │ ONNX Runtime │  ❌ Slow, quality loss
+└──────────┘    │  (minutes)   │    └──────────────┘
+                └──────────────┘
+
+MLOS Format-Agnostic Approach:
+┌──────────┐    ┌──────────────┐
+│ GGUF LLM │ -> │ llama.cpp    │  ✅ Instant, native quality
+└──────────┘    │  (direct)    │
+                └──────────────┘
+```
+
+**Key Benefits:**
+- **Faster Installation**: Skip conversion for execution-ready formats (GGUF, ONNX)
+- **Native Quality**: LLMs run with llama.cpp optimizations (quantization-aware)
+- **Smart Detection**: Axon auto-detects format via extension + magic bytes
+- **Fallback Safety**: Unknown formats gracefully convert to ONNX
+
+**LLM Example:**
+```bash
+# Install GGUF model (no conversion - native execution)
+axon install hf/TheBloke/TinyLlama-1.1B-Chat-v1.0-GGUF@latest
+
+# Register and run inference
+axon register hf/TheBloke/TinyLlama-1.1B-Chat-v1.0-GGUF@latest
+curl -X POST http://localhost:8080/models/.../inference \
+  -d '{"prompt": "What is ML?", "max_tokens": 64}'
+```
+
 ## 📊 E2E Validation
 
 **📈 [View Latest Test Report](https://mlos-foundation.github.io/system-test/)**
 
-| Model | Category | Status | Inference Time |
-|-------|----------|--------|----------------|
-| GPT-2 | NLP | ✅ Pass | ~68ms |
-| BERT | NLP | ✅ Pass | ~98ms |
-| RoBERTa | NLP | ✅ Pass | ~85ms |
-| ResNet-50 | Vision | ✅ Pass | ~45ms |
-| ViT | Vision | ✅ Pass | ~120ms |
-| MobileNetV2 | Vision | ✅ Pass | ~25ms |
+| Model | Category | Format | Status | Inference Time |
+|-------|----------|--------|--------|----------------|
+| GPT-2 | NLP | ONNX | ✅ Pass | ~68ms |
+| BERT | NLP | ONNX | ✅ Pass | ~98ms |
+| RoBERTa | NLP | ONNX | ✅ Pass | ~85ms |
+| T5 | NLP | ONNX | ✅ Pass | ~150ms |
+| TinyLlama | LLM | **GGUF** | ✅ Pass | ~200ms |
+| ResNet-50 | Vision | ONNX | ✅ Pass | ~45ms |
+| ViT | Vision | ONNX | ✅ Pass | ~120ms |
+| MobileNetV2 | Vision | ONNX | ✅ Pass | ~25ms |
+| CLIP | Multimodal | ONNX | ✅ Pass | ~180ms |
 
 ## 🏗️ Key Components
 
 ### 🧠 Axon - The Neural Pathway for ML Models
 
-**Version: v3.1.3** | [Repository](https://github.com/mlOS-foundation/axon) | [Releases](https://github.com/mlOS-foundation/axon/releases)
+**Version: v3.1.4** | [Repository](https://github.com/mlOS-foundation/axon) | [Releases](https://github.com/mlOS-foundation/axon/releases)
 
 - **Universal Model Installer**: Works with 80%+ of ML repositories
-- **Universal ONNX Conversion**: Docker-based multi-framework converter
+- **Format-Agnostic Installation**: Auto-detects GGUF, ONNX, SafeTensors, PyTorch
+- **Smart Format Detection**: Extension + magic byte detection for optimal runtime
 - **Model Package Format (MPF)**: Standardized `.axon` packages with `manifest.yaml`
 - **Manifest-First Architecture**: Format-agnostic model execution
 
@@ -120,10 +168,11 @@ curl -sSL axon.mlosfoundation.org | sh
 
 ### ⚙️ MLOS Core - Kernel-Level ML Runtime
 
-**Version: v3.2.8-alpha** | [Releases](https://github.com/mlOS-foundation/core-releases)
+**Version: v3.2.10-alpha** | [Releases](https://github.com/mlOS-foundation/core-releases)
 
 - **Multi-Protocol APIs**: HTTP REST, gRPC, IPC (ultra-low latency)
-- **Enhanced ONNX Plugin**: Multi-type tensor support, named inputs
+- **Format-Agnostic Runtime**: ONNX + GGUF/llama.cpp plugins for native execution
+- **LLM Support**: Native GGUF execution for TinyLlama, Phi-2, Qwen models
 - **Plugin Architecture**: Framework-agnostic via Standard Model Interface (SMI)
 - **Resource Management**: Kernel-level optimization for ML workloads
 
@@ -178,8 +227,8 @@ curl -X POST http://localhost:8080/models/hf%2Fgoogle%2Fvit-base-patch16-224%40l
 
 | Component | Version | Status | Repository |
 |-----------|---------|--------|------------|
-| **Axon** | v3.1.3 | ✅ Stable | [axon](https://github.com/mlOS-foundation/axon) |
-| **MLOS Core** | v3.2.8-alpha | ✅ Alpha | [core-releases](https://github.com/mlOS-foundation/core-releases) |
+| **Axon** | v3.1.4 | ✅ Stable | [axon](https://github.com/mlOS-foundation/axon) |
+| **MLOS Core** | v3.2.10-alpha | ✅ Alpha | [core-releases](https://github.com/mlOS-foundation/core-releases) |
 | **System Test** | Active | ✅ CI/CD | [system-test](https://github.com/mlOS-foundation/system-test) |
 | **SMI Spec** | v1.0.0 | 🔒 Private | [smi-spec](https://github.com/mlOS-foundation/smi-spec) |
 | **MLOS Linux (Ubuntu)** | - | 🔄 Planning | [mlos-linux-ubuntu](https://github.com/mlOS-foundation/mlos-linux-ubuntu) |
@@ -204,7 +253,9 @@ curl -X POST http://localhost:8080/models/hf%2Fgoogle%2Fvit-base-patch16-224%40l
 - **Core v2.2.0-alpha**: Multi-type tensor support, named inputs
 - **Axon v3.1.0**: Vision model support
 - **Axon v3.1.3**: Enhanced seq2seq/multi-encoder model support, improved T5 conversion
-- **Core v3.2.8-alpha**: Complete seq2seq inference with auto attention_mask generation
+- **Core v3.2.9-alpha**: Complete seq2seq inference with auto attention_mask generation
+- **Axon v3.1.4**: Format-agnostic model installation (GGUF, ONNX, SafeTensors, PyTorch)
+- **Core v3.2.10-alpha**: GGUF runtime plugin with llama.cpp backend for native LLM support
 - E2E validation with automated testing
 
 ### 🚧 Phase 3: Production Readiness (In Progress)
