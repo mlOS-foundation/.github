@@ -4,7 +4,8 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Axon](https://img.shields.io/badge/Axon-v3.1.4-brightgreen)](https://github.com/mlOS-foundation/axon/releases)
-[![Core](https://img.shields.io/badge/Core-v3.2.10--alpha-blue)](https://github.com/mlOS-foundation/core-releases)
+[![Core](https://img.shields.io/badge/Core-v5.0.0--alpha-blue)](https://github.com/mlOS-foundation/core-releases)
+[![Kernel](https://img.shields.io/badge/Kernel-v5.0.0--alpha-purple)](https://github.com/mlOS-foundation/mlos-linux-kernel/releases)
 [![E2E Tests](https://github.com/mlOS-foundation/system-test/actions/workflows/e2e-test.yml/badge.svg)](https://mlos-foundation.github.io/system-test/)
 
 ## 🎯 Mission
@@ -30,7 +31,7 @@ MLOS introduces a paradigm shift: **ML frameworks don't integrate with deploymen
           │    Convert       │    with MLOS    │    Inference
           │                  │                 │
 ┌─────────▼──────────────────▼─────────────────▼──────────────────┐
-│                    MLOS Core Engine (v3.2.10-alpha)             │
+│                    MLOS Core Engine (v5.0.0-alpha)              │
 │  ┌──────────────────────────────────────────────────────────┐  │
 │  │  Model Registry  │  Plugin Registry  │  Resource Mgr     │  │
 │  └──────────────────────────────────────────────────────────┘  │
@@ -89,7 +90,28 @@ The built-in ONNX Runtime plugin now supports **universal inference**:
 - ✅ Dynamic shape handling
 - ✅ Large input support (16MB+)
 
-### ⚡ NEW: Format-Agnostic Runtime (v3.2.10-alpha)
+### ⚡ NEW: Kernel Tensor Operations (v5.0.0-alpha)
+
+MLOS now features **complete kernel-level tensor operations** for ML workloads:
+
+| Operation | ioctl | Description |
+|-----------|-------|-------------|
+| **Tensor Pin** | `MLOS_TENSOR_PIN` | Pin tensors in memory for zero-copy mmap access |
+| **Tensor Unpin** | `MLOS_TENSOR_UNPIN` | Release pinned tensors for eviction |
+| **Memory Defrag** | `MLOS_MEMORY_DEFRAG` | Defragment GPU memory pool |
+| **Memory Trim** | `MLOS_MEMORY_TRIM` | Trim memory with LRU eviction |
+| **Inference Start** | `MLOS_INFERENCE_START` | Start kernel-scheduled inference |
+| **Inference Wait** | `MLOS_INFERENCE_WAIT` | Wait for inference completion |
+| **GPU List** | `MLOS_GPU_LIST` | Enumerate available GPUs |
+| **Tensor Prefetch** | `MLOS_TENSOR_PREFETCH` | Predictive tensor loading |
+
+**Kernel Module Releases:**
+- Ubuntu 22.04 (kernel 5.15)
+- Ubuntu 22.04 HWE (kernel 6.5)
+- Ubuntu 24.04 (kernel 6.8)
+- Flatcar (kernel 6.1)
+
+### ⚡ Format-Agnostic Runtime (v5.0.0-alpha)
 
 MLOS now features **native format execution** - models run in their optimal format without conversion overhead:
 
@@ -168,13 +190,24 @@ curl -sSL axon.mlosfoundation.org | sh
 
 ### ⚙️ MLOS Core - Kernel-Level ML Runtime
 
-**Version: v3.2.10-alpha** | [Releases](https://github.com/mlOS-foundation/core-releases)
+**Version: v5.0.0-alpha** | [Releases](https://github.com/mlOS-foundation/core-releases)
 
 - **Multi-Protocol APIs**: HTTP REST, gRPC, IPC (ultra-low latency)
 - **Format-Agnostic Runtime**: ONNX + GGUF/llama.cpp plugins for native execution
 - **LLM Support**: Native GGUF execution for TinyLlama, Phi-2, Qwen models
 - **Plugin Architecture**: Framework-agnostic via Standard Model Interface (SMI)
+- **Kernel Integration**: Complete ioctl operations for tensor memory management
 - **Resource Management**: Kernel-level optimization for ML workloads
+
+### 🐧 MLOS Kernel Module - Linux Kernel Integration
+
+**Version: v5.0.0-alpha** | [Releases](https://github.com/mlOS-foundation/mlos-linux-kernel/releases)
+
+- **Character Device**: `/dev/mlos-ml` for userspace communication
+- **Tensor Memory Manager**: LRU-based eviction, pinning, zero-copy mmap
+- **ML-Aware Scheduler**: Priority queues (REALTIME, HIGH, NORMAL, BATCH)
+- **GPU Support**: Multi-GPU enumeration, simulated GPU for testing
+- **Supported Kernels**: 5.15, 6.1, 6.5, 6.8
 
 ### 🧪 System Test - E2E Validation Framework
 
@@ -228,12 +261,12 @@ curl -X POST http://localhost:8080/models/hf%2Fgoogle%2Fvit-base-patch16-224%40l
 | Component | Version | Status | Repository |
 |-----------|---------|--------|------------|
 | **Axon** | v3.1.4 | ✅ Stable | [axon](https://github.com/mlOS-foundation/axon) |
-| **MLOS Core** | v3.2.10-alpha | ✅ Alpha | [core-releases](https://github.com/mlOS-foundation/core-releases) |
+| **MLOS Core** | v5.0.0-alpha | ✅ Alpha | [core-releases](https://github.com/mlOS-foundation/core-releases) |
+| **MLOS Kernel Module** | v5.0.0-alpha | ✅ Alpha | [mlos-linux-kernel](https://github.com/mlOS-foundation/mlos-linux-kernel) |
 | **System Test** | Active | ✅ CI/CD | [system-test](https://github.com/mlOS-foundation/system-test) |
 | **SMI Spec** | v1.0.0 | 🔒 Private | [smi-spec](https://github.com/mlOS-foundation/smi-spec) |
 | **MLOS Linux (Ubuntu)** | - | 🔄 Planning | [mlos-linux-ubuntu](https://github.com/mlOS-foundation/mlos-linux-ubuntu) |
 | **MLOS Linux (Flatcar)** | - | 🔄 Planning | [mlos-linux-flatcar](https://github.com/mlOS-foundation/mlos-linux-flatcar) |
-| **MLOS Kernel Patches** | - | 🔄 Planning | [mlos-linux-kernel](https://github.com/mlOS-foundation/mlos-linux-kernel) |
 
 ## 📅 Development Roadmap
 
@@ -258,14 +291,23 @@ curl -X POST http://localhost:8080/models/hf%2Fgoogle%2Fvit-base-patch16-224%40l
 - **Core v3.2.10-alpha**: GGUF runtime plugin with llama.cpp backend for native LLM support
 - E2E validation with automated testing
 
-### 🚧 Phase 3: Production Readiness (In Progress)
+### ✅ Phase 3: Kernel Integration (Complete)
+- **Core v5.0.0-alpha**: Complete kernel ioctl implementation
+- **Kernel v5.0.0-alpha**: Binary releases for 4 kernel versions
+- Tensor pinning/unpinning for zero-copy memory access
+- Memory defragmentation and trim operations
+- ML-aware scheduler with priority queues
+- GPU enumeration and management
+- Tested on Ubuntu 24.04 (kernel 6.8.0-60-generic)
+
+### 🚧 Phase 4: Production Readiness (In Progress)
 - **Timeline**: Q1-Q2 2026
 - gRPC full implementation
 - GPU memory management
 - Batched inference optimization
 - Model caching improvements
 
-### 📅 Phase 4: Ecosystem Expansion (Planned)
+### 📅 Phase 5: Ecosystem Expansion (Planned)
 - **Timeline**: Q2-Q3 2026
 - MLOS Linux Distributions (Ubuntu & Flatcar-based)
 - Additional repository adapters (Replicate, Kaggle)
