@@ -3,8 +3,8 @@
 **Building the Universal Operating System for Machine Learning**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Axon](https://img.shields.io/badge/Axon-v3.1.4-brightgreen)](https://github.com/mlOS-foundation/axon/releases)
-[![Core](https://img.shields.io/badge/Core-v5.0.0--alpha-blue)](https://github.com/mlOS-foundation/core-releases)
+[![Axon](https://img.shields.io/badge/Axon-v3.1.9-brightgreen)](https://github.com/mlOS-foundation/axon/releases)
+[![Core](https://img.shields.io/badge/Core-v5.0.1--alpha-blue)](https://github.com/mlOS-foundation/core-releases)
 [![Kernel](https://img.shields.io/badge/Kernel-v5.0.0--alpha-purple)](https://github.com/mlOS-foundation/mlos-linux-kernel/releases)
 [![E2E Tests](https://github.com/mlOS-foundation/system-test/actions/workflows/e2e-test.yml/badge.svg)](https://mlos-foundation.github.io/system-test/)
 
@@ -31,7 +31,7 @@ MLOS introduces a paradigm shift: **ML frameworks don't integrate with deploymen
           │    Convert       │    with MLOS    │    Inference
           │                  │                 │
 ┌─────────▼──────────────────▼─────────────────▼──────────────────┐
-│                    MLOS Core Engine (v5.0.0-alpha)              │
+│                    MLOS Core Engine (v5.0.1-alpha)              │
 │  ┌──────────────────────────────────────────────────────────┐  │
 │  │  Model Registry  │  Plugin Registry  │  Resource Mgr     │  │
 │  └──────────────────────────────────────────────────────────┘  │
@@ -55,6 +55,22 @@ MLOS introduces a paradigm shift: **ML frameworks don't integrate with deploymen
 ```
 
 ## ✨ Latest Features
+
+### 🔧 Docker ONNX Converter Fix (Axon v3.1.9)
+
+Fixed ONNX conversion for HuggingFace models that don't have pre-exported ONNX files:
+
+- ✅ **ResNet-50 Support**: `hf/microsoft/resnet-50` now converts and runs correctly
+- ✅ **Absolute Container Paths**: Fixed path handling in Docker converter to prevent Optimum misinterpretation
+- ✅ **E2E Validated**: Full pipeline tested with ResNet, BERT, GPT-2
+
+### ⚡ Smart Plugin Selection (Core v5.0.1-alpha)
+
+Improved plugin selection for native framework models:
+
+- ✅ **ONNX Detection**: Check if ONNX model exists before selecting runtime
+- ✅ **Native Preference**: Use native framework plugins (libtorch) when no ONNX available
+- ✅ **Case-Insensitive**: Support both `pytorch`/`PyTorch` and `torchscript`/`TorchScript`
 
 ### 🚀 Universal ONNX Conversion (Axon v3.x)
 
@@ -260,8 +276,8 @@ curl -X POST http://localhost:8080/models/hf%2Fgoogle%2Fvit-base-patch16-224%40l
 
 | Component | Version | Status | Repository |
 |-----------|---------|--------|------------|
-| **Axon** | v3.1.4 | ✅ Stable | [axon](https://github.com/mlOS-foundation/axon) |
-| **MLOS Core** | v5.0.0-alpha | ✅ Alpha | [core-releases](https://github.com/mlOS-foundation/core-releases) |
+| **Axon** | v3.1.9 | ✅ Stable | [axon](https://github.com/mlOS-foundation/axon) |
+| **MLOS Core** | v5.0.1-alpha | ✅ Alpha | [core-releases](https://github.com/mlOS-foundation/core-releases) |
 | **MLOS Kernel Module** | v5.0.0-alpha | ✅ Alpha | [mlos-linux-kernel](https://github.com/mlOS-foundation/mlos-linux-kernel) |
 | **System Test** | Active | ✅ CI/CD | [system-test](https://github.com/mlOS-foundation/system-test) |
 | **SMI Spec** | v1.0.0 | 🔒 Private | [smi-spec](https://github.com/mlOS-foundation/smi-spec) |
