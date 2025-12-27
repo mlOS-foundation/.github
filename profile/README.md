@@ -4,8 +4,8 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Axon](https://img.shields.io/badge/Axon-v3.1.9-brightgreen)](https://github.com/mlOS-foundation/axon/releases)
-[![Core](https://img.shields.io/badge/Core-v5.0.1--alpha-blue)](https://github.com/mlOS-foundation/core-releases)
-[![Kernel](https://img.shields.io/badge/Kernel-v5.0.0--alpha-purple)](https://github.com/mlOS-foundation/mlos-linux-kernel/releases)
+[![Core](https://img.shields.io/badge/Core-v5.2.0--alpha-blue)](https://github.com/mlOS-foundation/core-releases)
+[![Kernel](https://img.shields.io/badge/Kernel-v5.2.0--alpha-purple)](https://github.com/mlOS-foundation/mlos-linux-kernel/releases)
 [![E2E Tests](https://github.com/mlOS-foundation/system-test/actions/workflows/e2e-test.yml/badge.svg)](https://mlos-foundation.github.io/system-test/)
 
 ## 🎯 Mission
@@ -31,7 +31,7 @@ MLOS introduces a paradigm shift: **ML frameworks don't integrate with deploymen
           │    Convert       │    with MLOS    │    Inference
           │                  │                 │
 ┌─────────▼──────────────────▼─────────────────▼──────────────────┐
-│                    MLOS Core Engine (v5.0.1-alpha)              │
+│                    MLOS Core Engine (v5.2.0-alpha)              │
 │  ┌──────────────────────────────────────────────────────────┐  │
 │  │  Model Registry  │  Plugin Registry  │  Resource Mgr     │  │
 │  └──────────────────────────────────────────────────────────┘  │
@@ -64,7 +64,7 @@ Fixed ONNX conversion for HuggingFace models that don't have pre-exported ONNX f
 - ✅ **Absolute Container Paths**: Fixed path handling in Docker converter to prevent Optimum misinterpretation
 - ✅ **E2E Validated**: Full pipeline tested with ResNet, BERT, GPT-2
 
-### ⚡ Smart Plugin Selection (Core v5.0.1-alpha)
+### ⚡ Smart Plugin Selection (Core v5.2.0-alpha)
 
 Improved plugin selection for native framework models:
 
@@ -206,7 +206,7 @@ curl -sSL axon.mlosfoundation.org | sh
 
 ### ⚙️ MLOS Core - Kernel-Level ML Runtime
 
-**Version: v5.0.0-alpha** | [Releases](https://github.com/mlOS-foundation/core-releases)
+**Version: v5.2.0-alpha** | [Releases](https://github.com/mlOS-foundation/core-releases)
 
 - **Multi-Protocol APIs**: HTTP REST, gRPC, IPC (ultra-low latency)
 - **Format-Agnostic Runtime**: ONNX + GGUF/llama.cpp plugins for native execution
@@ -217,7 +217,7 @@ curl -sSL axon.mlosfoundation.org | sh
 
 ### 🐧 MLOS Kernel Module - Linux Kernel Integration
 
-**Version: v5.0.0-alpha** | [Releases](https://github.com/mlOS-foundation/mlos-linux-kernel/releases)
+**Version: v5.2.0-alpha** | [Releases](https://github.com/mlOS-foundation/mlos-linux-kernel/releases)
 
 - **Character Device**: `/dev/mlos-ml` for userspace communication
 - **Tensor Memory Manager**: LRU-based eviction, pinning, zero-copy mmap
@@ -277,8 +277,8 @@ curl -X POST http://localhost:8080/models/hf%2Fgoogle%2Fvit-base-patch16-224%40l
 | Component | Version | Status | Repository |
 |-----------|---------|--------|------------|
 | **Axon** | v3.1.9 | ✅ Stable | [axon](https://github.com/mlOS-foundation/axon) |
-| **MLOS Core** | v5.0.1-alpha | ✅ Alpha | [core-releases](https://github.com/mlOS-foundation/core-releases) |
-| **MLOS Kernel Module** | v5.0.0-alpha | ✅ Alpha | [mlos-linux-kernel](https://github.com/mlOS-foundation/mlos-linux-kernel) |
+| **MLOS Core** | v5.2.0-alpha | ✅ Alpha | [core-releases](https://github.com/mlOS-foundation/core-releases) |
+| **MLOS Kernel Module** | v5.2.0-alpha | ✅ Alpha | [mlos-linux-kernel](https://github.com/mlOS-foundation/mlos-linux-kernel) |
 | **System Test** | Active | ✅ CI/CD | [system-test](https://github.com/mlOS-foundation/system-test) |
 | **SMI Spec** | v1.0.0 | 🔒 Private | [smi-spec](https://github.com/mlOS-foundation/smi-spec) |
 | **MLOS Linux (Ubuntu)** | - | 🔄 Planning | [mlos-linux-ubuntu](https://github.com/mlOS-foundation/mlos-linux-ubuntu) |
