@@ -4,8 +4,8 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Axon](https://img.shields.io/badge/Axon-v3.1.9-brightgreen)](https://github.com/mlOS-foundation/axon/releases)
-[![Core](https://img.shields.io/badge/Core-v6.0.0--alpha-blue)](https://github.com/mlOS-foundation/core-releases)
-[![Kernel](https://img.shields.io/badge/Kernel-v6.0.0--alpha-purple)](https://github.com/mlOS-foundation/mlos-linux-kernel/releases)
+[![Core](https://img.shields.io/badge/Core-v6.1.0--alpha-blue)](https://github.com/mlOS-foundation/core-releases)
+[![Kernel](https://img.shields.io/badge/Kernel-v6.1.0--alpha-purple)](https://github.com/mlOS-foundation/mlos-linux-kernel/releases)
 [![E2E Tests](https://github.com/mlOS-foundation/system-test/actions/workflows/e2e-test.yml/badge.svg)](https://mlos-foundation.github.io/system-test/)
 
 ## 🎯 Mission
@@ -31,7 +31,7 @@ MLOS introduces a paradigm shift: **ML frameworks don't integrate with deploymen
           │    Convert       │    with MLOS    │    Inference
           │                  │                 │
 ┌─────────▼──────────────────▼─────────────────▼──────────────────┐
-│                    MLOS Core Engine (v6.0.0-alpha)              │
+│                    MLOS Core Engine (v6.1.0-alpha)              │
 │  ┌──────────────────────────────────────────────────────────┐  │
 │  │  Model Registry  │  Plugin Registry  │  Resource Mgr     │  │
 │  └──────────────────────────────────────────────────────────┘  │
@@ -55,6 +55,22 @@ MLOS introduces a paradigm shift: **ML frameworks don't integrate with deploymen
 ```
 
 ## ✨ Latest Features
+
+### ⚡ Enhanced Kernel Statistics (Core v6.1.0-alpha)
+
+Comprehensive observability for ML kernel operations with 4 new ioctls (total: 23):
+
+- ✅ **NUMA Memory Pool Statistics**: Per-node memory allocation tracking and migration metrics
+- ✅ **Adaptive Prefetch Learning**: Self-tuning prefetch timing with learning rate visibility
+- ✅ **Prediction Accuracy Tracking**: Deadline prediction quality metrics with calibration scores
+- ✅ **Extended Latency Statistics**: Variance, stddev, and percentile calculations (P50/P90/P99)
+
+| Feature | ioctl | Description |
+|---------|-------|-------------|
+| **NUMA Stats** | 70 | Per-node memory allocation and remote access tracking |
+| **Prefetch Learning** | 71 | Timing adaptation and success rate metrics |
+| **Prediction Accuracy** | 72 | False alarm/miss rates and calibration scores |
+| **Extended Latency** | 73 | Variance analysis and outlier detection |
 
 ### ⚡ Advanced Kernel Optimizations (Core v6.0.0-alpha)
 
@@ -220,18 +236,18 @@ curl -sSL axon.mlosfoundation.org | sh
 
 ### ⚙️ MLOS Core - Kernel-Level ML Runtime
 
-**Version: v6.0.0-alpha** | [Releases](https://github.com/mlOS-foundation/core-releases)
+**Version: v6.1.0-alpha** | [Releases](https://github.com/mlOS-foundation/core-releases)
 
 - **Multi-Protocol APIs**: HTTP REST, gRPC, IPC (ultra-low latency)
 - **Format-Agnostic Runtime**: ONNX + GGUF/llama.cpp plugins for native execution
 - **LLM Support**: Native GGUF execution for TinyLlama, Phi-2, Qwen models
 - **Plugin Architecture**: Framework-agnostic via Standard Model Interface (SMI)
-- **Kernel Integration**: Complete ioctl operations for tensor memory management
+- **Kernel Integration**: 23 ioctl operations for tensor memory management and observability
 - **Resource Management**: Kernel-level optimization for ML workloads
 
 ### 🐧 MLOS Kernel Module - Linux Kernel Integration
 
-**Version: v6.0.0-alpha** | [Releases](https://github.com/mlOS-foundation/mlos-linux-kernel/releases)
+**Version: v6.1.0-alpha** | [Releases](https://github.com/mlOS-foundation/mlos-linux-kernel/releases)
 
 - **Character Device**: `/dev/mlos-ml` for userspace communication
 - **Tensor Memory Manager**: LRU-based eviction, pinning, zero-copy mmap
@@ -291,8 +307,8 @@ curl -X POST http://localhost:8080/models/hf%2Fgoogle%2Fvit-base-patch16-224%40l
 | Component | Version | Status | Repository |
 |-----------|---------|--------|------------|
 | **Axon** | v3.1.9 | ✅ Stable | [axon](https://github.com/mlOS-foundation/axon) |
-| **MLOS Core** | v6.0.0-alpha | ✅ Alpha | [core-releases](https://github.com/mlOS-foundation/core-releases) |
-| **MLOS Kernel Module** | v6.0.0-alpha | ✅ Alpha | [mlos-linux-kernel](https://github.com/mlOS-foundation/mlos-linux-kernel) |
+| **MLOS Core** | v6.1.0-alpha | ✅ Alpha | [core-releases](https://github.com/mlOS-foundation/core-releases) |
+| **MLOS Kernel Module** | v6.1.0-alpha | ✅ Alpha | [mlos-linux-kernel](https://github.com/mlOS-foundation/mlos-linux-kernel) |
 | **System Test** | Active | ✅ CI/CD | [system-test](https://github.com/mlOS-foundation/system-test) |
 | **SMI Spec** | v1.0.0 | 🔒 Private | [smi-spec](https://github.com/mlOS-foundation/smi-spec) |
 | **MLOS Linux (Ubuntu)** | - | 🔄 Planning | [mlos-linux-ubuntu](https://github.com/mlOS-foundation/mlos-linux-ubuntu) |
@@ -322,8 +338,8 @@ curl -X POST http://localhost:8080/models/hf%2Fgoogle%2Fvit-base-patch16-224%40l
 - E2E validation with automated testing
 
 ### ✅ Phase 3: Kernel Integration (Complete)
-- **Core v6.0.0-alpha**: Complete kernel ioctl implementation with advanced optimizations
-- **Kernel v6.0.0-alpha**: Binary releases for 4 kernel versions
+- **Core v6.1.0-alpha**: 23 kernel ioctls with enhanced statistics and observability
+- **Kernel v6.1.0-alpha**: Binary releases for 4 kernel versions
 - Tensor pinning/unpinning for zero-copy memory access
 - Memory defragmentation and trim operations
 - ML-aware scheduler with priority queues
