@@ -4,8 +4,8 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Axon](https://img.shields.io/badge/Axon-v3.1.9-brightgreen)](https://github.com/mlOS-foundation/axon/releases)
-[![Core](https://img.shields.io/badge/Core-v6.1.0--alpha-blue)](https://github.com/mlOS-foundation/core-releases)
-[![Kernel](https://img.shields.io/badge/Kernel-v6.1.0--alpha-purple)](https://github.com/mlOS-foundation/mlos-linux-kernel/releases)
+[![Core](https://img.shields.io/badge/Core-v6.2.0--alpha-blue)](https://github.com/mlOS-foundation/core-releases)
+[![Kernel](https://img.shields.io/badge/Kernel-v6.2.0--alpha-purple)](https://github.com/mlOS-foundation/mlos-linux-kernel/releases)
 [![E2E Tests](https://github.com/mlOS-foundation/system-test/actions/workflows/e2e-test.yml/badge.svg)](https://mlos-foundation.github.io/system-test/)
 
 ## 🎯 Mission
@@ -31,7 +31,7 @@ MLOS introduces a paradigm shift: **ML frameworks don't integrate with deploymen
           │    Convert       │    with MLOS    │    Inference
           │                  │                 │
 ┌─────────▼──────────────────▼─────────────────▼──────────────────┐
-│                    MLOS Core Engine (v6.1.0-alpha)              │
+│                    MLOS Core Engine (v6.2.0-alpha)              │
 │  ┌──────────────────────────────────────────────────────────┐  │
 │  │  Model Registry  │  Plugin Registry  │  Resource Mgr     │  │
 │  └──────────────────────────────────────────────────────────┘  │
@@ -55,6 +55,19 @@ MLOS introduces a paradigm shift: **ML frameworks don't integrate with deploymen
 ```
 
 ## ✨ Latest Features
+
+### ⚡ Kernel Prefetch Plans (Core v6.2.0-alpha)
+
+Activates kernel-level optimizations that were previously implemented but not enabled:
+
+- ✅ **Prefetch Plans**: Adaptive tensor loading for ONNX and GGUF plugins (5-15% latency reduction)
+- ✅ **High Priority Scheduling**: `MLOS_PRIO_HIGH` for inference (reduced jitter under load)
+- ✅ **Performance Cleanup**: Removed 111 fflush() calls (5-10% I/O improvement)
+
+| Plugin | Prefetch Strategy | Priority |
+|--------|-------------------|----------|
+| **ONNX** | 4-tensor adaptive plan with critical/optional flags | HIGH |
+| **GGUF** | LLM-optimized (embeddings, KV cache, layer weights) | HIGH |
 
 ### ⚡ Enhanced Kernel Statistics (Core v6.1.0-alpha)
 
@@ -236,7 +249,7 @@ curl -sSL axon.mlosfoundation.org | sh
 
 ### ⚙️ MLOS Core - Kernel-Level ML Runtime
 
-**Version: v6.1.0-alpha** | [Releases](https://github.com/mlOS-foundation/core-releases)
+**Version: v6.2.0-alpha** | [Releases](https://github.com/mlOS-foundation/core-releases)
 
 - **Multi-Protocol APIs**: HTTP REST, gRPC, IPC (ultra-low latency)
 - **Format-Agnostic Runtime**: ONNX + GGUF/llama.cpp plugins for native execution
@@ -247,7 +260,7 @@ curl -sSL axon.mlosfoundation.org | sh
 
 ### 🐧 MLOS Kernel Module - Linux Kernel Integration
 
-**Version: v6.1.0-alpha** | [Releases](https://github.com/mlOS-foundation/mlos-linux-kernel/releases)
+**Version: v6.2.0-alpha** | [Releases](https://github.com/mlOS-foundation/mlos-linux-kernel/releases)
 
 - **Character Device**: `/dev/mlos-ml` for userspace communication
 - **Tensor Memory Manager**: LRU-based eviction, pinning, zero-copy mmap
@@ -307,8 +320,8 @@ curl -X POST http://localhost:8080/models/hf%2Fgoogle%2Fvit-base-patch16-224%40l
 | Component | Version | Status | Repository |
 |-----------|---------|--------|------------|
 | **Axon** | v3.1.9 | ✅ Stable | [axon](https://github.com/mlOS-foundation/axon) |
-| **MLOS Core** | v6.1.0-alpha | ✅ Alpha | [core-releases](https://github.com/mlOS-foundation/core-releases) |
-| **MLOS Kernel Module** | v6.1.0-alpha | ✅ Alpha | [mlos-linux-kernel](https://github.com/mlOS-foundation/mlos-linux-kernel) |
+| **MLOS Core** | v6.2.0-alpha | ✅ Alpha | [core-releases](https://github.com/mlOS-foundation/core-releases) |
+| **MLOS Kernel Module** | v6.2.0-alpha | ✅ Alpha | [mlos-linux-kernel](https://github.com/mlOS-foundation/mlos-linux-kernel) |
 | **System Test** | Active | ✅ CI/CD | [system-test](https://github.com/mlOS-foundation/system-test) |
 | **SMI Spec** | v1.0.0 | 🔒 Private | [smi-spec](https://github.com/mlOS-foundation/smi-spec) |
 | **MLOS Linux (Ubuntu)** | - | 🔄 Planning | [mlos-linux-ubuntu](https://github.com/mlOS-foundation/mlos-linux-ubuntu) |
@@ -338,8 +351,8 @@ curl -X POST http://localhost:8080/models/hf%2Fgoogle%2Fvit-base-patch16-224%40l
 - E2E validation with automated testing
 
 ### ✅ Phase 3: Kernel Integration (Complete)
-- **Core v6.1.0-alpha**: 23 kernel ioctls with enhanced statistics and observability
-- **Kernel v6.1.0-alpha**: Binary releases for 4 kernel versions
+- **Core v6.2.0-alpha**: 23 kernel ioctls with enhanced statistics and observability
+- **Kernel v6.2.0-alpha**: Binary releases for 4 kernel versions
 - Tensor pinning/unpinning for zero-copy memory access
 - Memory defragmentation and trim operations
 - ML-aware scheduler with priority queues
